@@ -1,0 +1,5 @@
+/target/
+/.mdstore/
+*.db
+*.db-shm
+*.db-wal

@@ -1,0 +1,10 @@
+[package]
+name = "mdlite"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.98"
+blake3 = "1.8.2"
+clap = { version = "4.5.38", features = ["derive"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
