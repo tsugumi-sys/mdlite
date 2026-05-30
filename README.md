@@ -16,9 +16,6 @@ The local benchmarks behind this project suggest a practical split:
 - whole-document writes are faster as direct filesystem overwrites, so editing
   should stay on the filesystem side.
 
-These numbers come from
-`/Users/akira.noda/dev/personal/sqlite-performance/small-files-io/bench-results-*.md`.
-They are local toy-project benchmarks, not universal claims.
 
 ### `mdstore search` vs File System + `rg`
 
@@ -33,10 +30,6 @@ Both commands wrote output to `/dev/null`.
 | `00009999` | `mdstore search` | `7.4 ms +/- 3.9 ms` | `16.37x` faster |
 | `00009999` | `rg -l --fixed-strings` | `121.0 ms +/- 2.4 ms` | baseline |
 
-The rare-query `mdstore` run is short enough that `hyperfine` warns about shell
-startup precision, so treat the exact ratio as approximate. The direction is
-still clear for this local dataset: the prebuilt FTS index avoids walking and
-scanning 10,000 individual files.
 
 ### Body Search: SQLite FTS5 vs File System + `rg`
 
