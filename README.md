@@ -20,6 +20,24 @@ These numbers come from
 `/Users/akira.noda/dev/personal/sqlite-performance/small-files-io/bench-results-*.md`.
 They are local toy-project benchmarks, not universal claims.
 
+### `mdstore search` vs File System + `rg`
+
+Dataset: `10,000` Markdown files, `4 KB` each. The files were synced into
+`mdstore`, then the release binary was compared with `rg` using `hyperfine`.
+Both commands wrote output to `/dev/null`.
+
+| query | command | mean time | result |
+| --- | --- | ---: | --- |
+| `latency` | `mdstore search` | `35.1 ms +/- 2.3 ms` | `4.00x` faster |
+| `latency` | `rg -l --fixed-strings` | `140.1 ms +/- 3.5 ms` | baseline |
+| `00009999` | `mdstore search` | `7.4 ms +/- 3.9 ms` | `16.37x` faster |
+| `00009999` | `rg -l --fixed-strings` | `121.0 ms +/- 2.4 ms` | baseline |
+
+The rare-query `mdstore` run is short enough that `hyperfine` warns about shell
+startup precision, so treat the exact ratio as approximate. The direction is
+still clear for this local dataset: the prebuilt FTS index avoids walking and
+scanning 10,000 individual files.
+
 ### Body Search: SQLite FTS5 vs File System + `rg`
 
 Dataset: `10,000` documents, `4 KB` each.
